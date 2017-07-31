@@ -12,7 +12,7 @@ public class MonsterSpawner : MonoBehaviour {
     public int maxSpawns;
     public int spawnSeconds;
     public int spawnChancePercent;
-    public GameObject[] monsters;
+    public GameObject[] mapMonsters;
 
 	void Start () {
         lastSpawnAttempt = Time.time;
@@ -25,7 +25,7 @@ public class MonsterSpawner : MonoBehaviour {
             var rand = Random.Range(1, 101);
             if (rand <= spawnChancePercent)
             {
-                var randMon = Random.Range(0, monsters.Length);
+                var randMon = Random.Range(0, mapMonsters.Length);
 
                 var monMarker = new GoogleMapMarker();
                 var monMarkerLoc = new GoogleMapLocation();
@@ -41,7 +41,7 @@ public class MonsterSpawner : MonoBehaviour {
                 monMarker.locations = monMarkerLocArray;
                 monMarker.size = GoogleMapMarker.GoogleMapMarkerSize.Tiny;
                 monMarker.label = "";
-                if (randMon == 0) //obviosly, dont leave this like this
+                if (randMon == 0) //obviously, dont leave this like this
                 {
                     monMarker.color = GoogleMapColor.green;
                 }
@@ -62,12 +62,12 @@ public class MonsterSpawner : MonoBehaviour {
                 monMarkerArray[mainMapMarkers.Length] = monMarker;
                 mainMap.markers = monMarkerArray;
 
-                var _monster = Instantiate(monsters[randMon], new Vector3((lonadj * 10000f) * mainMap.X_PER_0P0001_LON, (latadj * 10000f) * mainMap.Y_PER_0P0001_LAT, 0), new Quaternion());
-                _monster.GetComponent<Monster>().mainMap = mainMap;
-                _monster.GetComponent<Monster>().lastLatCenter = mainMap.centerLocation.latitude;
-                _monster.GetComponent<Monster>().lastLonCenter = mainMap.centerLocation.longitude;
-                _monster.GetComponent<Monster>().spawner = this;
-                _monster.GetComponent<Monster>().uiController = UiController;
+                var _monster = Instantiate(mapMonsters[randMon], new Vector3((lonadj * 10000f) * mainMap.X_PER_0P0001_LON, (latadj * 10000f) * mainMap.Y_PER_0P0001_LAT, 0), new Quaternion());
+                _monster.GetComponent<MapMonster>().mainMap = mainMap;
+                _monster.GetComponent<MapMonster>().lastLatCenter = mainMap.centerLocation.latitude;
+                _monster.GetComponent<MapMonster>().lastLonCenter = mainMap.centerLocation.longitude;
+                _monster.GetComponent<MapMonster>().spawner = this;
+                _monster.GetComponent<MapMonster>().uiController = UiController;
                 activeSpawns += 1;
 
                 mainMap.Refresh();

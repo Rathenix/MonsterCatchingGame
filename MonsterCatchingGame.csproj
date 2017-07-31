@@ -76,10 +76,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GoogleMaps\Scripts\GoogleMap.cs" />
+    <Compile Include="Assets\Scripts\CaptureController.cs" />
+    <Compile Include="Assets\Scripts\CaptureMonster.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\MapMonster.cs" />
     <Compile Include="Assets\Scripts\Monster.cs" />
     <Compile Include="Assets\Scripts\MonsterInteractionsMenu.cs" />
     <Compile Include="Assets\Scripts\MonsterSpawner.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Title.cs" />
     <Compile Include="Assets\Scripts\UiController.cs" />
   </ItemGroup>
   <ItemGroup>

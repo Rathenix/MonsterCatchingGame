@@ -7,7 +7,7 @@ public class MonsterInteractionsMenu : MonoBehaviour {
     public Button captureButton;
     public Button fightButton;
     public Button scareButton;
-    public Monster monster;
+    public MapMonster monster;
 
     private void Start()
     {
