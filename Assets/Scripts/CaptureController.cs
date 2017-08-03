@@ -10,6 +10,7 @@ public class CaptureController : MonoBehaviour {
     public Vector3 topBounds = new Vector3();
     public Vector3 bottomBounds = new Vector3();
 
+
     private void Start()
     {
         Game = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -28,5 +29,11 @@ public class CaptureController : MonoBehaviour {
             captureMonster = Instantiate(CaptureMonsters[2], new Vector3(), new Quaternion());
         }
         captureMonster.GetComponent<CaptureMonster>().captureController = this;
+    }
+
+    public void MonsterCaptured(Monster monster)
+    {
+        Game.Team.Add(monster);
+        SceneManager.LoadScene("Map");
     }
 }
