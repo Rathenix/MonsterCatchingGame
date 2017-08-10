@@ -62,12 +62,16 @@ public class MonsterSpawner : MonoBehaviour {
                 monMarkerArray[mainMapMarkers.Length] = monMarker;
                 mainMap.markers = monMarkerArray;
 
-                var _monster = Instantiate(mapMonsters[randMon], new Vector3((lonadj * 10000f) * mainMap.X_PER_0P0001_LON, (latadj * 10000f) * mainMap.Y_PER_0P0001_LAT, 0), new Quaternion());
-                _monster.GetComponent<MapMonster>().mainMap = mainMap;
-                _monster.GetComponent<MapMonster>().lastLatCenter = mainMap.centerLocation.latitude;
-                _monster.GetComponent<MapMonster>().lastLonCenter = mainMap.centerLocation.longitude;
-                _monster.GetComponent<MapMonster>().spawner = this;
-                _monster.GetComponent<MapMonster>().uiController = UiController;
+                var _monsterGameObject = Instantiate(mapMonsters[randMon], new Vector3((lonadj * 10000f) * mainMap.X_PER_0P0001_LON, (latadj * 10000f) * mainMap.Y_PER_0P0001_LAT, 0), new Quaternion());
+                var _mapMonster = _monsterGameObject.GetComponent<MapMonster>();
+                _mapMonster.mainMap = mainMap;
+                _mapMonster.lastLatCenter = mainMap.centerLocation.latitude;
+                _mapMonster.lastLonCenter = mainMap.centerLocation.longitude;
+                _mapMonster.spawner = this;
+                _mapMonster.uiController = UiController;
+                var _monster = _monsterGameObject.GetComponent<Monster>();
+                _monster.SetMonsterStatsById(randMon);
+
                 activeSpawns += 1;
 
                 mainMap.Refresh();

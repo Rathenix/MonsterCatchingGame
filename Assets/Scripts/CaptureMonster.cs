@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CaptureMonster : MonoBehaviour {
 
-    public Monster Monster;
+    private Monster monster;
     public CaptureController captureController;
     public Sprite defaultSprite;
     public Sprite hitSprite;
@@ -18,10 +18,11 @@ public class CaptureMonster : MonoBehaviour {
 
     private void Start()
     {
-        moveDistance = 1f / Monster.Speed;
-        moveCooldown = 1f / Monster.Speed;
-        restChance = 100f - ((Monster.CurrentHp / Monster.MaxHp) * 100f);
-        restTime = 10 - Monster.Speed;
+        monster = GetComponent<Monster>();
+        moveDistance = 1f / monster.Speed;
+        moveCooldown = 1f / monster.Speed;
+        restChance = 100f - ((monster.CurrentHp / monster.MaxHp) * 100f);
+        restTime = 10 - monster.Speed;
     }
     private void Update()
     {
@@ -32,7 +33,9 @@ public class CaptureMonster : MonoBehaviour {
         }
         else if (IsCaptured)
         {
-            captureController.MonsterCaptured(Monster);
+            var capturedMonster = new Monster();
+            capturedMonster.Initialize(monster);
+            captureController.MonsterCaptured(capturedMonster);
         }
     }
 
@@ -100,9 +103,9 @@ public class CaptureMonster : MonoBehaviour {
             if (collider)
             {
                 StartCoroutine(AnimateHit());
-                if (Monster.CurrentHp > 1)
+                if (monster.CurrentHp > 1)
                 {
-                    Monster.CurrentHp -= 1;
+                    monster.CurrentHp -= 1;
                 }
                 else
                 {

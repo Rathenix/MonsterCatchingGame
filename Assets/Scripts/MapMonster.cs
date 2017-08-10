@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MapMonster : MonoBehaviour {
 
-    public GameController Game;
-    public Monster Monster;
     public GoogleMap mainMap;
     public MonsterSpawner spawner;
     public float lastLatCenter;
@@ -15,10 +13,6 @@ public class MapMonster : MonoBehaviour {
     public MonsterInteractionsMenu interactionsMenu;
     public bool hasInteractionsMenu = false;
 
-    private void Start()
-    {
-        Game = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-    }
     private void Update () {
         if (mainMap.mapLoaded)
         {
@@ -75,7 +69,7 @@ public class MapMonster : MonoBehaviour {
     public void OnCapture()
     {
         Debug.Log("You try to capture it.");
-        Game.EngagedMonster = Monster;
+        GameController.EngagedMonster = GetComponent<Monster>();
         SceneManager.LoadScene("Capture");
     }
     public void OnFight()

@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public static class GameController
 {
-    public string PlayerName = "Player";
-    public List<Monster> Team;
-    public int PlayerCaptureBalls = 10;
-    public Monster EngagedMonster;
-
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-        Team = new List<Monster>();
-    }
+    public static string PlayerName = "Player";
+    public static List<Monster> Team = new List<Monster>();
+    public static int PlayerCaptureBalls = 10;
+    public static Monster EngagedMonster;
 }

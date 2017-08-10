@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour {
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Update () {
 		if (Input.anyKeyDown)
         {
             SceneManager.LoadScene("Map");
