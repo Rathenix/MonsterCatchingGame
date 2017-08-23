@@ -13,27 +13,27 @@ public class CaptureController : MonoBehaviour {
     private void Start()
     {
         var engagedMonster = GameController.EngagedMonster;
-        var captureMonster = new GameObject();
+        var captureMonsterObj = new GameObject();
         if (engagedMonster.Name == "Greenmon") //obviously, dont leave this like this
         {
-            captureMonster = Instantiate(CaptureMonsters[0], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[0], new Vector3(), new Quaternion());
         }
         if (engagedMonster.Name == "Redmon")
         {
-            captureMonster = Instantiate(CaptureMonsters[1], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[1], new Vector3(), new Quaternion());
         }
         if (engagedMonster.Name == "Bluemon")
         {
-            captureMonster = Instantiate(CaptureMonsters[2], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[2], new Vector3(), new Quaternion());
         }
-        captureMonster.GetComponent<CaptureMonster>().captureController = this;
-        captureMonster.GetComponent<Monster>().Initialize(engagedMonster);
+        var captureMonster = captureMonsterObj.GetComponent<CaptureMonster>();
+        captureMonster.captureController = this;
+        captureMonster.Initialize(engagedMonster);
     }
 
     public void MonsterCaptured(Monster monster)
     {
         GameController.Team.Add(monster);
-        DontDestroyOnLoad(monster);
         SceneManager.LoadScene("Map");
     }
 }

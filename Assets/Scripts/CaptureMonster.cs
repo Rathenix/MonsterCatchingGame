@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaptureMonster : MonoBehaviour {
+public class CaptureMonster : Monster {
 
-    private Monster monster;
     public CaptureController captureController;
     public Sprite defaultSprite;
     public Sprite hitSprite;
@@ -18,12 +17,12 @@ public class CaptureMonster : MonoBehaviour {
 
     private void Start()
     {
-        monster = GetComponent<Monster>();
-        moveDistance = 1f / monster.Speed;
-        moveCooldown = 1f / monster.Speed;
-        restChance = 100f - ((monster.CurrentHp / monster.MaxHp) * 100f);
-        restTime = 10 - monster.Speed;
+        moveDistance = 1f / Speed;
+        moveCooldown = 1f / Speed;
+        restChance = 100f - ((CurrentHp / MaxHp) * 100f);
+        restTime = 10 - Speed;
     }
+    
     private void Update()
     {
         if (!IsAnimating && !IsCaptured)
@@ -33,9 +32,7 @@ public class CaptureMonster : MonoBehaviour {
         }
         else if (IsCaptured)
         {
-            var capturedMonster = new Monster();
-            capturedMonster.Initialize(monster);
-            captureController.MonsterCaptured(capturedMonster);
+            captureController.MonsterCaptured(this);
         }
     }
 
@@ -103,9 +100,9 @@ public class CaptureMonster : MonoBehaviour {
             if (collider)
             {
                 StartCoroutine(AnimateHit());
-                if (monster.CurrentHp > 1)
+                if (CurrentHp > 1)
                 {
-                    monster.CurrentHp -= 1;
+                    CurrentHp -= 1;
                 }
                 else
                 {

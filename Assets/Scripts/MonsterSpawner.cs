@@ -69,8 +69,7 @@ public class MonsterSpawner : MonoBehaviour {
                 _mapMonster.lastLonCenter = mainMap.centerLocation.longitude;
                 _mapMonster.spawner = this;
                 _mapMonster.uiController = UiController;
-                var _monster = _monsterGameObject.GetComponent<Monster>();
-                _monster.SetMonsterStatsById(randMon);
+                _mapMonster.SetMonsterStatsById(randMon);
 
                 activeSpawns += 1;
 

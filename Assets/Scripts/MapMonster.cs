@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapMonster : MonoBehaviour {
+public class MapMonster : Monster {
 
     public GoogleMap mainMap;
     public MonsterSpawner spawner;
@@ -69,12 +69,14 @@ public class MapMonster : MonoBehaviour {
     public void OnCapture()
     {
         Debug.Log("You try to capture it.");
-        GameController.EngagedMonster = GetComponent<Monster>();
+        GameController.EngagedMonster = this;
         SceneManager.LoadScene("Capture");
     }
     public void OnFight()
     {
         Debug.Log("You try to fight it.");
+        GameController.EngagedMonster = this;
+        SceneManager.LoadScene("Fight");
     }
     public void OnScare()
     {
