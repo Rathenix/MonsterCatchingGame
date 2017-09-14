@@ -27,7 +27,6 @@ public class MapManualMovement : MonoBehaviour {
             // Move object across XY plane
             GameManager.Instance.playerStatus = GameManager.PlayerStatus.FreeFromDevice;
             controller.Move(new Vector3(-touchDeltaPosition.x * Speed, -touchDeltaPosition.y * Speed, 0));
-            Debug.Log("Moving: " + touchDeltaPosition * Speed);
         }
     }
 }

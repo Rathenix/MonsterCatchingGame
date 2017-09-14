@@ -70,40 +70,42 @@ public class GameManager : Singleton<GameManager> {
             //TODO: Show location service is not enabled error. 
             return;
 		}
-
-		// playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
+       
 		playerGeoPosition = new GeoPoint();
-		// GeoPoint playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
-		if (playerStatus == PlayerStatus.TiedToDevice) {
-			playerGeoPosition = player_loc.loc;
-			player.GetComponent<ObjectPosition> ().setPositionOnMap (playerGeoPosition);
-		} else if (playerStatus == PlayerStatus.FreeFromDevice){
-			playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
-		}
+        if (playerStatus == PlayerStatus.TiedToDevice)
+        {
+            playerGeoPosition = player_loc.loc;
+            player.GetComponent<ObjectPosition>().setPositionOnMap(playerGeoPosition);
+        }
+        else if (playerStatus == PlayerStatus.FreeFromDevice)
+        {
+            playerGeoPosition = getMainMapMap().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.y));
+        }
 
+        var tileCenterMercator = getMainMapMap().tileCenterMercator(playerGeoPosition);
+        //if (!getMainMapMap().centerMercator.isEqual(tileCenterMercator))
+        if (false)
+        {
 
-		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
-		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
+            newMap.SetActive(true);
+            getNewMapMap().initialize();
+            getNewMapMap().centerMercator = tileCenterMercator;
 
-			newMap.SetActive(true);
-			getNewMapMap ().initialize ();
-			getNewMapMap ().centerMercator = tileCenterMercator;
+            getNewMapMap().DrawMap();
 
-			getNewMapMap ().DrawMap ();
+            getNewMapMap().transform.localScale = Vector3.Scale(
+                new Vector3(getNewMapMap().mapRectangle.getWidthMeters(), getNewMapMap().mapRectangle.getHeightMeters(), 1.0f),
+                new Vector3(getNewMapMap().realWorldtoUnityWorldScale.x, getNewMapMap().realWorldtoUnityWorldScale.y, 1.0f));
 
-			getNewMapMap ().transform.localScale = Vector3.Scale(
-				new Vector3 (getNewMapMap ().mapRectangle.getWidthMeters (), getNewMapMap ().mapRectangle.getHeightMeters (), 1.0f),
-				new Vector3(getNewMapMap ().realWorldtoUnityWorldScale.x, getNewMapMap ().realWorldtoUnityWorldScale.y, 1.0f));	
+            Vector2 tempPosition = getMainMapMap().getPositionOnMap(getNewMapMap().centerLatLon);
+            newMap.transform.position = new Vector3(tempPosition.x, tempPosition.y, transform.position.z);
 
-			Vector2 tempPosition = GameManager.Instance.getMainMapMap ().getPositionOnMap (getNewMapMap ().centerLatLon);
-			newMap.transform.position = new Vector3 (tempPosition.x, 0, tempPosition.y);
+            GameObject temp = newMap;
+            newMap = mainMap;
+            mainMap = temp;
 
-			GameObject temp = newMap;
-			newMap = mainMap;
-			mainMap = temp;
-
-		}
-		if(getMainMapMap().isDrawn && mainMap.GetComponent<Renderer>().enabled == false){
+        }
+        if (getMainMapMap().isDrawn && mainMap.GetComponent<Renderer>().enabled == false){
 			mainMap.GetComponent<Renderer>().enabled = true;
 			newMap.GetComponent<Renderer>().enabled = false;
 			newMap.SetActive(false);

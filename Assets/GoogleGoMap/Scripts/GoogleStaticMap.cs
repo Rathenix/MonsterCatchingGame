@@ -13,7 +13,7 @@ public class GoogleStaticMap : MonoBehaviour {
 	// To prevent unintentionally sending to many map request to the server
 	// and paying the fee (for instance in a update loop). Set it to zero to
 	// remove the restriction.
-	private const  int MAX_MAP_REQUEST_NUM = 50;
+	private const  int MAX_MAP_REQUEST_NUM = 10;
 	[HideInInspector]
 	public bool isDrawn = false;
 
@@ -105,7 +105,7 @@ public class GoogleStaticMap : MonoBehaviour {
 		heightMercatorY = (verticalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator;
 
 		// You can initialize realWorldtoUnityWorldScale to another value of your choice.
-		realWorldtoUnityWorldScale = new Vector2 (0.1f, 0.1f); 
+		realWorldtoUnityWorldScale = new Vector2 (0.5f, 0.5f); 
 	}
 
 
@@ -130,6 +130,7 @@ public class GoogleStaticMap : MonoBehaviour {
 			url = baseURL + location + parameters + style + (_apiKey == "" ? "" : "&key=" + _apiKey);
 			findCorners ();
 
+            Debug.Log("Calling Google Maps: " + url);
 			WWW www = new WWW (url);
 			countOfMapRequests++;
 			// Wait for download to complete
@@ -216,7 +217,7 @@ public class GoogleStaticMap : MonoBehaviour {
 		MyPoint SW_Mercator = new MyPoint (centerMercator.x - widthMercatorX / 2.0f, centerMercator.y - heightMercatorY / 2.0f);
 
 		MyPoint NE_Mercator = new MyPoint (centerMercator.x + widthMercatorX / 2.0f, centerMercator.y + heightMercatorY / 2.0f);
-		MyPoint mapCenterMeters = new MyPoint (gameObject.transform.position.x, gameObject.transform.position.z);
+		MyPoint mapCenterMeters = new MyPoint (gameObject.transform.position.x, gameObject.transform.position.y);
 		mapRectangle.setCorners (SW_Mercator, NE_Mercator, mapCenterMeters);
 	}
 
@@ -416,7 +417,7 @@ public class GoogleStaticMap : MonoBehaviour {
 	
 		return Vector2.Scale(
 			new Vector2 (gameObject.transform.position.x / this.realWorldtoUnityWorldScale.x + this.mapRectangle.getWidthMeterLonRatio_deg () * delta_lon,
-				gameObject.transform.position.z / this.realWorldtoUnityWorldScale.y + this.mapRectangle.getHeightMeterLatRatio_deg () * delta_lat),
+				gameObject.transform.position.y / this.realWorldtoUnityWorldScale.y + this.mapRectangle.getHeightMeterLatRatio_deg () * delta_lat),
 			this.realWorldtoUnityWorldScale);
 	}
 
@@ -424,7 +425,7 @@ public class GoogleStaticMap : MonoBehaviour {
 	public GeoPoint getPositionOnMap(Vector2 point) {
 		
 		float delta_x = (point.x - gameObject.transform.position.x) / this.realWorldtoUnityWorldScale.x;
-		float delta_y = (point.y - gameObject.transform.position.z) / this.realWorldtoUnityWorldScale.y;
+		float delta_y = (point.y - gameObject.transform.position.y) / this.realWorldtoUnityWorldScale.y;
 		GeoPoint geo = new GeoPoint ();
 		geo.setLatLon_deg (this.centerLatLon.lat_d + delta_y / this.mapRectangle.getHeightMeterLatRatio_deg (), this.centerLatLon.lon_d + delta_x / this.mapRectangle.getWidthMeterLonRatio_deg ());
 		return geo;

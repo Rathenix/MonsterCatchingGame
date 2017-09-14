@@ -17,8 +17,7 @@ public class ObjectPosition : MonoBehaviour {
 
 	public void setPositionOnMap () {
 		Vector2 tempPosition = GameManager.Instance.getMainMapMap ().getPositionOnMap (this.pos);
-        //transform.position = new Vector3 (tempPosition.x, transform.position.y, tempPosition.y);
-        transform.position = tempPosition;
+        transform.position = new Vector3 (tempPosition.x, tempPosition.y, transform.position.z);
 	}
 
 	public void setPositionOnMap (GeoPoint pos) {
