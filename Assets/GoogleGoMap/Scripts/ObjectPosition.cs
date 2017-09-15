@@ -16,12 +16,14 @@ public class ObjectPosition : MonoBehaviour {
 	}
 
 	public void setPositionOnMap () {
-		Vector2 tempPosition = GameManager.Instance.getMainMapMap ().getPositionOnMap (this.pos);
+		Vector2 tempPosition = GoMapGameManager.Instance.getMainMapMap ().getPositionOnMap (this.pos);
         transform.position = new Vector3 (tempPosition.x, tempPosition.y, transform.position.z);
 	}
 
 	public void setPositionOnMap (GeoPoint pos) {
 		this.pos = pos;
+        lat_d = pos.lat_d;
+        lon_d = pos.lon_d;
 		setPositionOnMap ();
 	}
 

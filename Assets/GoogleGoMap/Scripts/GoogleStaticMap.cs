@@ -83,7 +83,6 @@ public class GoogleStaticMap : MonoBehaviour {
 		}
 	}
 
-	[HideInInspector]
 	// Defines a rectangale in Unity world for the map in use.
 	public MapRectangle mapRectangle;
 
@@ -100,12 +99,12 @@ public class GoogleStaticMap : MonoBehaviour {
 		const float initialPixelToMercator = 2.0f / ((float) TILE_SIZE); 
 
 		curPixelToMercator = initialPixelToMercator / Mathf.Pow (2.0f, (float)zoom) / (this.doubleResolution ? 2.0f : 1.0f);
-	
+
 		widthMercatorX = (horizontalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator;
 		heightMercatorY = (verticalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator;
 
 		// You can initialize realWorldtoUnityWorldScale to another value of your choice.
-		realWorldtoUnityWorldScale = new Vector2 (0.5f, 0.5f); 
+		//realWorldtoUnityWorldScale = new Vector2 (.25f, .25f); 
 	}
 
 

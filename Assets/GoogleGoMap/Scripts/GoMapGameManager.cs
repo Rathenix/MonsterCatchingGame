@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : Singleton<GameManager> {
+public class GoMapGameManager : Singleton<GoMapGameManager> {
 
 	[HideInInspector]
 	public bool locationServicesIsRunning = false;

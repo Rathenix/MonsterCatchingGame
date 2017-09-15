@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour {
 
-    public GoogleMap mainMap;
+    public GoogleStaticMap mainMap;
     public UiController UiController;
     private float lastSpawnAttempt;
     public int activeSpawns;
     public int maxSpawns;
     public int spawnSeconds;
     public int spawnChancePercent;
-    public GameObject[] mapMonsters;
+    public GameObject rustlingGrass;
 
 	void Start () {
         lastSpawnAttempt = Time.time;
@@ -20,62 +20,35 @@ public class MonsterSpawner : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (Time.time > lastSpawnAttempt + spawnSeconds && activeSpawns < maxSpawns)
+        AttemptToSpawnMonsterInGrass();
+    }
+
+    void AttemptToSpawnMonsterInGrass()
+    {
+        if (mainMap.isDrawn)
         {
-            var rand = Random.Range(1, 101);
-            if (rand <= spawnChancePercent)
+            if (Time.time > lastSpawnAttempt + spawnSeconds && activeSpawns < maxSpawns)
             {
-                var randMon = Random.Range(0, mapMonsters.Length);
-
-                var monMarker = new GoogleMapMarker();
-                var monMarkerLoc = new GoogleMapLocation();
-
-                var latadj = Random.Range(-mainMap.LAT_DIST_CENTER_TO_EDGE, mainMap.LAT_DIST_CENTER_TO_EDGE);
-                var lonadj = Random.Range(-mainMap.LON_DEST_CENTER_TO_EDGE, mainMap.LON_DEST_CENTER_TO_EDGE);
-                monMarkerLoc.latitude = mainMap.centerLocation.latitude + latadj;
-                monMarkerLoc.longitude = mainMap.centerLocation.longitude + lonadj;
-
-                monMarkerLoc.address = "";
-                var monMarkerLocArray = new GoogleMapLocation[1];
-                monMarkerLocArray[0] = monMarkerLoc;
-                monMarker.locations = monMarkerLocArray;
-                monMarker.size = GoogleMapMarker.GoogleMapMarkerSize.Tiny;
-                monMarker.label = "";
-                if (randMon == 0) //obviously, dont leave this like this
+                var rand = Random.Range(1, 101);
+                if (rand <= spawnChancePercent)
                 {
-                    monMarker.color = GoogleMapColor.green;
+                    var randMon = Random.Range(0, 2); //obviously, dont leave this like this
+                    var northeastCorner = mainMap.mapRectangle.getCornerLatLon(GoogleStaticMap.MapRectangle.GetCorner.NE);
+                    var southwestCorner = mainMap.mapRectangle.getCornerLatLon(GoogleStaticMap.MapRectangle.GetCorner.SW);
+                    var grassLat = Random.Range(southwestCorner.lat_d, northeastCorner.lat_d);
+                    var grassLon = Random.Range(southwestCorner.lon_d, northeastCorner.lon_d);
+                    var grassGeoPoint = new GeoPoint(grassLat, grassLon);
+                    var rustlingGrassObj = Instantiate(rustlingGrass);
+                    var grassLoc = rustlingGrassObj.GetComponent<ObjectPosition>();
+                    grassLoc.setPositionOnMap(grassGeoPoint);
+                    var mapMonster = rustlingGrassObj.GetComponent<MapMonster>();
+                    mapMonster.SetMonsterStatsById(randMon);
+                    mapMonster.spawner = this;
+                    mapMonster.uiController = UiController;
+                    activeSpawns += 1;
                 }
-                if (randMon == 1)
-                {
-                    monMarker.color = GoogleMapColor.red;
-                }
-                if (randMon == 2)
-                {
-                    monMarker.color = GoogleMapColor.blue;
-                }
-                var mainMapMarkers = mainMap.markers;
-                var monMarkerArray = new GoogleMapMarker[mainMapMarkers.Length + 1];
-                for (var i = 0; i < mainMapMarkers.Length; i++)
-                {
-                    monMarkerArray[i] = mainMapMarkers[i];
-                }
-                monMarkerArray[mainMapMarkers.Length] = monMarker;
-                mainMap.markers = monMarkerArray;
-
-                var _monsterGameObject = Instantiate(mapMonsters[randMon], new Vector3((lonadj * 10000f) * mainMap.X_PER_0P0001_LON, (latadj * 10000f) * mainMap.Y_PER_0P0001_LAT, 0), new Quaternion());
-                var _mapMonster = _monsterGameObject.GetComponent<MapMonster>();
-                _mapMonster.mainMap = mainMap;
-                _mapMonster.lastLatCenter = mainMap.centerLocation.latitude;
-                _mapMonster.lastLonCenter = mainMap.centerLocation.longitude;
-                _mapMonster.spawner = this;
-                _mapMonster.uiController = UiController;
-                _mapMonster.SetMonsterStatsById(randMon);
-
-                activeSpawns += 1;
-
-                mainMap.Refresh();
+                lastSpawnAttempt = Time.time;
             }
-            lastSpawnAttempt = Time.time;
         }
-	}
+    }
 }

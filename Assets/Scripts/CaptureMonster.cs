@@ -17,8 +17,8 @@ public class CaptureMonster : Monster {
 
     private void Start()
     {
-        moveDistance = 1f / Speed;
-        moveCooldown = 1f / Speed;
+        moveDistance = 10f / Speed;
+        moveCooldown = .01f / Speed;
         restChance = 100f - ((CurrentHp / MaxHp) * 100f);
         restTime = 10 - Speed;
     }

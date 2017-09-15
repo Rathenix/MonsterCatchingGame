@@ -13,6 +13,17 @@ public class UiController : MonoBehaviour {
     private void Start()
     {
         ShowTeamText();
+        monsterInteractionsMenu = FindObjectOfType<MonsterInteractionsMenu>();
+        monsterInteractionsMenu.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (monsterInteractionsMenu.monster != null)
+        {
+            var target = monsterInteractionsMenu.transform.FindChild("Target");
+            target.transform.position = monsterInteractionsMenu.monster.transform.position;
+        }
     }
 
     public void ShowTeamText()
@@ -29,8 +40,18 @@ public class UiController : MonoBehaviour {
         }
     }
 
-    public MonsterInteractionsMenu ShowMonsterInteractionsMenu(GameObject target)
+    public MonsterInteractionsMenu ShowMonsterInteractionsMenu(MapMonster monster)
     {
-        return Instantiate(monsterInteractionsMenu, target.transform.position, new Quaternion(), transform.GetComponentInParent<Canvas>().transform);
+        monsterInteractionsMenu.gameObject.SetActive(true);
+        monsterInteractionsMenu.monster = monster;
+        var target = monsterInteractionsMenu.transform.FindChild("Target");
+        target.transform.position = monster.transform.position;
+        return monsterInteractionsMenu;
+    }
+
+    public void HideMonsterInteractionsMenu()
+    {
+        monsterInteractionsMenu.monster = null;
+        monsterInteractionsMenu.gameObject.SetActive(false);
     }
 }
