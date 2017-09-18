@@ -32,7 +32,7 @@ public class MonsterSpawner : MonoBehaviour {
                 var rand = Random.Range(1, 101);
                 if (rand <= spawnChancePercent)
                 {
-                    var randMon = Random.Range(0, 2); //obviously, dont leave this like this
+                    var randMon = Random.Range(0, 3); //obviously, dont leave this like this
                     var northeastCorner = mainMap.mapRectangle.getCornerLatLon(GoogleStaticMap.MapRectangle.GetCorner.NE);
                     var southwestCorner = mainMap.mapRectangle.getCornerLatLon(GoogleStaticMap.MapRectangle.GetCorner.SW);
                     var grassLat = Random.Range(southwestCorner.lat_d, northeastCorner.lat_d);
