@@ -92,10 +92,12 @@
     <Compile Include="Assets\GoogleGoMap\Scripts\PlayerLocationService.cs" />
     <Compile Include="Assets\GoogleGoMap\Scripts\Singleton.cs" />
     <Compile Include="Assets\GoogleMaps\Scripts\GoogleMap.cs" />
+    <Compile Include="Assets\Scripts\Ball.cs" />
     <Compile Include="Assets\Scripts\CaptureController.cs" />
     <Compile Include="Assets\Scripts\CaptureMonster.cs" />
     <Compile Include="Assets\Scripts\FightController.cs" />
     <Compile Include="Assets\Scripts\FightMonster.cs" />
+    <Compile Include="Assets\Scripts\Flipper.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MapManualMovement.cs" />
     <Compile Include="Assets\Scripts\MapMonster.cs" />
