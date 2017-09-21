@@ -14,29 +14,25 @@ public class CaptureMonster : Monster {
     public float moveCooldown = 1f;
     public float restChance = 0f;
     public float restTime = 1f;
+    Vector3 StartPos;
 
     private void Start()
     {
+        moveTime = Time.time;
         moveDistance = 10f / Speed;
         moveCooldown = .01f / Speed;
         restChance = 100f - ((CurrentHp / MaxHp) * 100f);
         restTime = 10 - Speed;
+        StartPos = transform.position;
     }
     
     private void Update()
     {
         if (!IsAnimating && !IsCaptured)
         {
-            MoveRandomly();
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //    var collider = Physics2D.OverlapPoint(mousePosition);
-            //    if (collider)
-            //    {
-            //        HitAndCheckIfCaptured();
-            //    }
-            //}
+            //MoveRandomly();
+            moveTime += Time.deltaTime;
+            MoveBackAndForth();
         }
         else if (IsCaptured)
         {
@@ -99,6 +95,11 @@ public class CaptureMonster : Monster {
         }
     }
 
+    void MoveBackAndForth()
+    {
+        GetComponent<Rigidbody2D>().MovePosition(new Vector2(StartPos.x + Mathf.PingPong(moveTime * 100, 150), StartPos.y + Mathf.PingPong(moveTime * 50, 50)));
+    }
+
     private void HitAndCheckIfCaptured()
     {
         StartCoroutine(AnimateHit());
@@ -112,7 +113,7 @@ public class CaptureMonster : Monster {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ball")
         {

@@ -16,15 +16,15 @@ public class CaptureController : MonoBehaviour {
         var captureMonsterObj = new GameObject();
         if (engagedMonster.Name == "Greenmon") //obviously, dont leave this like this
         {
-            captureMonsterObj = Instantiate(CaptureMonsters[0], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[0], new Vector3(-80, 100, 0), new Quaternion());
         }
         if (engagedMonster.Name == "Redmon")
         {
-            captureMonsterObj = Instantiate(CaptureMonsters[1], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[1], new Vector3(-80, 100, 0), new Quaternion());
         }
         if (engagedMonster.Name == "Bluemon")
         {
-            captureMonsterObj = Instantiate(CaptureMonsters[2], new Vector3(), new Quaternion());
+            captureMonsterObj = Instantiate(CaptureMonsters[2], new Vector3(-80, 100, 0), new Quaternion());
         }
         var captureMonster = captureMonsterObj.GetComponent<CaptureMonster>();
         captureMonster.captureController = this;
