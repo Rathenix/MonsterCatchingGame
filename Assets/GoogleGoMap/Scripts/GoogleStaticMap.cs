@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class GoogleStaticMap : MonoBehaviour {
 
-	private const int TILE_SIZE = 512;  // default world map size in google static map.
+	private const int TILE_SIZE = 256;  // default world map size in google static map.
 	private const int MAX_PIXEL = 640;
 	const float initialPixelToMercator = 2.0f / ((float) TILE_SIZE); 
 	private float curPixelToMercator;
@@ -101,10 +102,7 @@ public class GoogleStaticMap : MonoBehaviour {
 		curPixelToMercator = initialPixelToMercator / Mathf.Pow (2.0f, (float)zoom) / (this.doubleResolution ? 2.0f : 1.0f);
 
 		widthMercatorX = (horizontalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator;
-		heightMercatorY = (verticalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator;
-
-		// You can initialize realWorldtoUnityWorldScale to another value of your choice.
-		//realWorldtoUnityWorldScale = new Vector2 (.25f, .25f); 
+		heightMercatorY = (verticalSize * (this.doubleResolution ? 2.0f : 1.0f)) * curPixelToMercator; 
 	}
 
 
@@ -410,18 +408,18 @@ public class GoogleStaticMap : MonoBehaviour {
 
 	// Return the position of an object in the unity world given its position on map (lat, lon)
 	public Vector2 getPositionOnMap(GeoPoint point) {
-		
-		float delta_lon = point.lon_d - this._centerLatLon.lon_d;
-		float delta_lat = point.lat_d - this._centerLatLon.lat_d;
-	
-		return Vector2.Scale(
-			new Vector2 (gameObject.transform.position.x / this.realWorldtoUnityWorldScale.x + this.mapRectangle.getWidthMeterLonRatio_deg () * delta_lon,
-				gameObject.transform.position.y / this.realWorldtoUnityWorldScale.y + this.mapRectangle.getHeightMeterLatRatio_deg () * delta_lat),
-			this.realWorldtoUnityWorldScale);
-	}
 
-	// Return the position of an object on the map (lat, lon) given its position in the unity world.
-	public GeoPoint getPositionOnMap(Vector2 point) {
+        float delta_lon = point.lon_d - this._centerLatLon.lon_d;
+        float delta_lat = point.lat_d - this._centerLatLon.lat_d;
+
+        return Vector2.Scale(
+            new Vector2(gameObject.transform.position.x / this.realWorldtoUnityWorldScale.x + this.mapRectangle.getWidthMeterLonRatio_deg() * delta_lon,
+                gameObject.transform.position.y / this.realWorldtoUnityWorldScale.y + this.mapRectangle.getHeightMeterLatRatio_deg() * delta_lat),
+                this.realWorldtoUnityWorldScale) * 8;
+    }
+
+    // Return the position of an object on the map (lat, lon) given its position in the unity world.
+    public GeoPoint getPositionOnMap(Vector2 point) {
 		
 		float delta_x = (point.x - gameObject.transform.position.x) / this.realWorldtoUnityWorldScale.x;
 		float delta_y = (point.y - gameObject.transform.position.y) / this.realWorldtoUnityWorldScale.y;
