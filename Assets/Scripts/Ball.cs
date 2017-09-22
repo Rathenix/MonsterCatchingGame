@@ -15,8 +15,12 @@ public class Ball : MonoBehaviour {
 		if (transform.position.y < -200)
         {
             //balls--;
+            var rb = GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.zero;
+            rb.rotation = 0;
+            rb.inertia = 0;
+            rb.Sleep();
             transform.position = StartPosition;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 	}
 }

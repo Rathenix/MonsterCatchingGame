@@ -46,6 +46,8 @@ public class UiController : MonoBehaviour {
         hamburgerButton.onClick.AddListener(OnHamburgerClick);
         var recoverButton = teamPane.GetComponentInChildren<Button>();
         recoverButton.onClick.AddListener(OnRecoverClick);
+        var ChipsText = teamPane.transform.FindChild("ChipsText");
+        ChipsText.GetComponent<TextMeshProUGUI>().text = "Chips: " + GameController.PlayerChips;
     }
 
     public MonsterInteractionsMenu ShowMonsterInteractionsMenu(MapMonster monster)

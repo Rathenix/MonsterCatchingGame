@@ -93,6 +93,8 @@
     <Compile Include="Assets\GoogleGoMap\Scripts\Singleton.cs" />
     <Compile Include="Assets\GoogleMaps\Scripts\GoogleMap.cs" />
     <Compile Include="Assets\Scripts\Ball.cs" />
+    <Compile Include="Assets\Scripts\Bumper.cs" />
+    <Compile Include="Assets\Scripts\CaptureChip.cs" />
     <Compile Include="Assets\Scripts\CaptureController.cs" />
     <Compile Include="Assets\Scripts\CaptureMonster.cs" />
     <Compile Include="Assets\Scripts\FightController.cs" />
