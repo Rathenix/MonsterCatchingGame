@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FightController : MonoBehaviour {
-
-    //public GameObject[] FightMonsters;
+    
     public GameObject EngagedMonsterObj;
     public GameObject PlayerMonsterObj;
     Monster EngagedMonster;
@@ -14,6 +13,7 @@ public class FightController : MonoBehaviour {
     public GameObject CaptureButtonObj;
     public GameObject ItemButtonObj;
     public GameObject RunButtonObj;
+    public GameObject MonsterTray;
     GameObject heldButton;
 
     private void Start()
