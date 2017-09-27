@@ -29,7 +29,7 @@ public class CaptureController : MonoBehaviour {
 
     private void Update()
     {
-        UpdateChips();
+        //UpdateChips();
     }
 
     void UpdateChips()

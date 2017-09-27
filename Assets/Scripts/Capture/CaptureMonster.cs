@@ -19,6 +19,7 @@ public class CaptureMonster : Monster {
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         moveTime = Time.time;
         moveDistance = 10f / Speed;
         moveCooldown = .01f / Speed;
