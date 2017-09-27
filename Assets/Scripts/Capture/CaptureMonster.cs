@@ -15,6 +15,7 @@ public class CaptureMonster : Monster {
     public float restChance = 0f;
     public float restTime = 1f;
     Vector3 StartPos;
+    Rigidbody2D rb;
 
     private void Start()
     {
@@ -97,7 +98,7 @@ public class CaptureMonster : Monster {
 
     void MoveBackAndForth()
     {
-        GetComponent<Rigidbody2D>().MovePosition(new Vector2(StartPos.x + Mathf.PingPong(moveTime * 100, 150), StartPos.y + Mathf.PingPong(moveTime * 50, 50)));
+        rb.MovePosition(new Vector2(StartPos.x + Mathf.PingPong(moveTime * 100, 75), StartPos.y + Mathf.PingPong(moveTime * 50, 50)));
     }
 
     private void HitAndCheckIfCaptured()

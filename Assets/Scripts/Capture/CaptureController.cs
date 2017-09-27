@@ -19,7 +19,7 @@ public class CaptureController : MonoBehaviour {
     private void Start()
     {
         var engagedMonster = GameController.EngagedMonster;
-        var captureMonsterObj = Instantiate(engagedMonster.CaptureObject, new Vector3(-80, 100, 0), new Quaternion());
+        var captureMonsterObj = Instantiate(engagedMonster.CaptureObject, new Vector3(-30, 25, 0), new Quaternion());
         var captureMonster = captureMonsterObj.GetComponent<CaptureMonster>();
         captureMonster.captureController = this;
         captureMonster.Initialize(engagedMonster);
