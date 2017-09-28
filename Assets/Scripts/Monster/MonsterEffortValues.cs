@@ -13,5 +13,15 @@ namespace Assets.Scripts.Monster
         public int Defense;
         public int SpecialDefense;
         public int Speed;
+
+        public MonsterEffortValues()
+        {
+            HP = 0;
+            Attack = 0;
+            SpecialAttack = 0;
+            Defense = 0;
+            SpecialDefense = 0;
+            Speed = 0;
+        }
     }
 }

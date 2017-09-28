@@ -12,6 +12,10 @@ public class CaptureMonster : Monster {
     List<Vector2> Positions;
     float teleportTimer = 0f;
     float TeleportRate = 5f;
+    Sprite GreenBall;
+    Sprite YellowBall;
+    Sprite RedBall;
+    int hits = 0;
 
     private void Start()
     {
@@ -19,6 +23,9 @@ public class CaptureMonster : Monster {
         Animator = GetComponent<Animator>();
         Positions = new List<Vector2>();
         AddAndSetPositions();
+        GreenBall = Resources.Load("Capture/MonsterCatchingBallGreen", typeof(Sprite)) as Sprite;
+        YellowBall = Resources.Load("Capture/MonsterCatchingBallYellow", typeof(Sprite)) as Sprite;
+        RedBall = Resources.Load("Capture/MonsterCatchingBallRed", typeof(Sprite)) as Sprite;
     }
     
     private void Update()
@@ -56,14 +63,21 @@ public class CaptureMonster : Monster {
         }
     }
 
-    private void HitAndCheckIfCaptured()
+    private void HitAndCheckIfCaptured(Transform ball)
     {
         StartCoroutine(AnimateHit());
-        if (CurrentHp > 1)
+        hits++;
+        if (hits == 1)
         {
-            CurrentHp -= 1;
+            ball.GetComponent<SpriteRenderer>().sprite = YellowBall;
+            CurrentHp -= 3;
         }
-        else
+        else  if (hits == 2)
+        {
+            ball.GetComponent<SpriteRenderer>().sprite = GreenBall;
+            CurrentHp -= 3;
+        }
+        else if (hits >= 3)
         {
             StartCoroutine(AnimateCapture());
         }
@@ -73,7 +87,7 @@ public class CaptureMonster : Monster {
     {
         if (collision.gameObject.tag == "Ball")
         {
-            HitAndCheckIfCaptured();
+            HitAndCheckIfCaptured(collision.transform);
         }
     }
 
