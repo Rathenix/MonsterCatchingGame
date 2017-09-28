@@ -5,36 +5,27 @@ using UnityEngine;
 public class CaptureMonster : Monster {
 
     public CaptureController captureController;
-    public Sprite defaultSprite;
-    public Sprite hitSprite;
     private bool IsAnimating = false;
     private bool IsCaptured = false;
-    private float moveTime;
-    public float moveDistance = 1f;
-    public float moveCooldown = 1f;
-    public float restChance = 0f;
-    public float restTime = 1f;
-    Vector3 StartPos;
     Rigidbody2D rb;
+    Animator Animator;
+    List<Vector2> Positions;
+    float teleportTimer = 0f;
+    float TeleportRate = 5f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        moveTime = Time.time;
-        moveDistance = 10f / Speed;
-        moveCooldown = .01f / Speed;
-        restChance = 100f - ((CurrentHp / MaxHp) * 100f);
-        restTime = 10 - Speed;
-        StartPos = transform.position;
+        Animator = GetComponent<Animator>();
+        Positions = new List<Vector2>();
+        AddAndSetPositions();
     }
     
     private void Update()
     {
         if (!IsAnimating && !IsCaptured)
         {
-            //MoveRandomly();
-            moveTime += Time.deltaTime;
-            MoveBackAndForth();
+            TeleportAroundOverTime();
         }
         else if (IsCaptured)
         {
@@ -42,64 +33,27 @@ public class CaptureMonster : Monster {
         }
     }
 
-    private void MoveRandomly()
+    private void AddAndSetPositions()
     {
-        if (Time.time >= moveTime + moveCooldown)
-        {
-            var randDirection = Random.Range(0, 4);
-            switch (randDirection)
-            {
-                case 0:
-                    if (transform.position.x <= captureController.bottomBounds.x)
-                    {
-                        transform.position += new Vector3(moveDistance, 0, 0);
-                        if (transform.position.x >= captureController.bottomBounds.x)
-                        {
-                            transform.position = new Vector3(captureController.bottomBounds.x, transform.position.y, transform.position.z);
-                        }
-                        moveTime = Time.time;
-                    }
-                    break;
-                case 1:
-                    if (transform.position.x >= captureController.topBounds.x)
-                    {
-                        transform.position += new Vector3(-moveDistance, 0, 0);
-                        if (transform.position.x <= captureController.topBounds.x)
-                        {
-                            transform.position = new Vector3(captureController.topBounds.x, transform.position.y, transform.position.z);
-                        }
-                        moveTime = Time.time;
-                    }
-                    break;
-                case 2:
-                    if (transform.position.y <= captureController.topBounds.y)
-                    {
-                        transform.position += new Vector3(0, moveDistance, 0);
-                        if (transform.position.y >= captureController.topBounds.y)
-                        {
-                            transform.position = new Vector3(transform.position.x, captureController.topBounds.y, transform.position.z);
-                        }
-                        moveTime = Time.time;
-                    }
-                    break;
-                case 3:
-                    if (transform.position.y >= captureController.bottomBounds.y)
-                    {
-                        transform.position += new Vector3(0, -moveDistance, 0);
-                        if (transform.position.y <= captureController.bottomBounds.y)
-                        {
-                            transform.position = new Vector3(transform.position.x, captureController.bottomBounds.y, transform.position.z);
-                        }
-                        moveTime = Time.time;
-                    }
-                    break;
-            }
-        }
+        Positions.Add(new Vector2(0, 60));
+        Positions.Add(new Vector2(-60, 105));
+        Positions.Add(new Vector2(55, 105));
+        Positions.Add(new Vector2(-45, 15));
+        Positions.Add(new Vector2(45, 15));
+        Positions.Add(new Vector2(0, -45));
+        Positions.Add(new Vector2(-80, -50));
+        Positions.Add(new Vector2(85, -50));
+        transform.position = Positions[0];
     }
 
-    void MoveBackAndForth()
+    private void TeleportAroundOverTime()
     {
-        rb.MovePosition(new Vector2(StartPos.x + Mathf.PingPong(moveTime * 100, 75), StartPos.y + Mathf.PingPong(moveTime * 50, 50)));
+        teleportTimer += Time.deltaTime;
+        if (teleportTimer >= TeleportRate)
+        {
+            transform.position = Positions[Random.Range(0, 8)];
+            teleportTimer = 0;
+        }
     }
 
     private void HitAndCheckIfCaptured()
@@ -126,10 +80,9 @@ public class CaptureMonster : Monster {
     private IEnumerator AnimateHit()
     {
         IsAnimating = true;
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = hitSprite;
+        Animator.Play("MonsterHit");
         yield return StartCoroutine(ShakeGameObject(gameObject, .2f, .1f));
-        spriteRenderer.sprite = defaultSprite;
+        Animator.Play("MonsterNormal");
         IsAnimating = false;
     }
 
@@ -141,7 +94,7 @@ public class CaptureMonster : Monster {
         }
         IsAnimating = true;
         var spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = hitSprite;
+        //Animator.Play("Capture");
         yield return StartCoroutine(ScaleGameObjectOverTime(gameObject, .5f, 0f));
         IsAnimating = false;
         IsCaptured = true;
