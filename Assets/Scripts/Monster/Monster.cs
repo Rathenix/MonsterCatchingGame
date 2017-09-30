@@ -26,7 +26,7 @@ public class Monster : MonoBehaviour {
     public MonsterMove Move4;
     public Dictionary<int, MonsterMove> LearnSet;
     public GameObject CaptureObject;
-    public GameObject FightObject;
+    public Sprite Sprite;
 
     public void Initialize(Monster mon)
     {
@@ -51,7 +51,7 @@ public class Monster : MonoBehaviour {
         Move4 = mon.Move4;
         LearnSet = mon.LearnSet;
         CaptureObject = mon.CaptureObject;
-        FightObject = mon.FightObject;
+        Sprite = mon.Sprite;
     }
     public void LoadMonsterById(int id)
     {
@@ -84,7 +84,7 @@ public class Monster : MonoBehaviour {
                 Move4 = new MonsterMove();
                 LearnSet = new Dictionary<int, MonsterMove>();
                 CaptureObject = Resources.Load("Capture/greenmon_capture", typeof(GameObject)) as GameObject;
-                FightObject = Resources.Load("Fight/greenmon_fight", typeof(GameObject)) as GameObject;
+                Sprite = Resources.Load("Monster/greenmon", typeof(Sprite)) as Sprite;
                 break;
             case MonsterList.Redmon:
                 Species = MonsterList.Redmon;
@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour {
                 Move4 = new MonsterMove();
                 LearnSet = new Dictionary<int, MonsterMove>();
                 CaptureObject = Resources.Load("Capture/redmon_capture", typeof(GameObject)) as GameObject;
-                FightObject = Resources.Load("Fight/redmon_fight", typeof(GameObject)) as GameObject;
+                Sprite = Resources.Load("Monster/redmon", typeof(Sprite)) as Sprite;
                 break;
             case MonsterList.Bluemon:
                 Species = MonsterList.Bluemon;
@@ -132,7 +132,7 @@ public class Monster : MonoBehaviour {
                 Move4 = new MonsterMove();
                 LearnSet = new Dictionary<int, MonsterMove>();
                 CaptureObject = Resources.Load("Capture/bluemon_capture", typeof(GameObject)) as GameObject;
-                FightObject = Resources.Load("Fight/bluemon_fight", typeof(GameObject)) as GameObject;
+                Sprite = Resources.Load("Monster/bluemon", typeof(Sprite)) as Sprite;
                 break;
         }
     }

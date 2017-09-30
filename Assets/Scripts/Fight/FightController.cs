@@ -20,12 +20,12 @@ public class FightController : MonoBehaviour {
     private void Start()
     {
         canvas = FindObjectOfType<Canvas>();
-        EngagedMonsterObj = Instantiate(GameController.EngagedMonster.FightObject, canvas.transform);
+        EngagedMonsterObj = Instantiate(Resources.Load("Fight/EngagedMonster", typeof(GameObject)), canvas.transform) as GameObject;
         EngagedMonster = EngagedMonsterObj.GetComponent<FightMonster>();
         EngagedMonster.Initialize(GameController.EngagedMonster);
         if (GameController.Team.Count > 0)
         {
-            PlayerMonsterObj = Instantiate(GameController.Team[0].FightObject, canvas.transform);
+            PlayerMonsterObj = Instantiate(Resources.Load("Fight/PlayerMonster", typeof(GameObject)), canvas.transform) as GameObject;
             PlayerMonster = PlayerMonsterObj.GetComponent<FightMonster>();
             PlayerMonster.Initialize(GameController.Team[0]);
             PlayerMonster.IsPlayer = true;

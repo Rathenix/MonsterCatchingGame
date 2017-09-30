@@ -12,10 +12,11 @@ public class FightMonster : Monster {
 
     private void Start()
     {
+        var renderer = transform.GetComponent<SpriteRenderer>();
+        renderer.sprite = Sprite;
         if (IsPlayer)
         {
-            transform.position = new Vector3(-70, 10, 0);
-            transform.rotation = new Quaternion(0, 180, 0, 0);
+            renderer.flipX = true;
         }
         HealthBar = transform.FindChild("HealthBar").gameObject;
         var hpFillAmount = (float)CurrentHp / (float)MaxHp;
@@ -29,10 +30,5 @@ public class FightMonster : Monster {
         var textbox = StatPane.GetComponent<TextMeshProUGUI>();
         textbox.text = System.String.Format(textbox.text, Species, Level, Type1, (Type2 == Assets.Scripts.Monster.MonsterType.None ? "" : " / " + Type2.ToString()), Attack,
             IVs.Attack, EVs.Attack, Defense, IVs.Defense, EVs.Defense, Speed, IVs.Speed, EVs.Speed);
-        if (IsPlayer)
-        {
-            //StatPane.transform.position = new Vector3(-90, 20, 0);
-            StatPane.transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
     }
 }
