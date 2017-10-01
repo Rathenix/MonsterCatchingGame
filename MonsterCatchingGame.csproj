@@ -113,6 +113,8 @@
     <Compile Include="Assets\Scripts\Monster\MonsterIndividualValues.cs" />
     <Compile Include="Assets\Scripts\Monster\MonsterList.cs" />
     <Compile Include="Assets\Scripts\Monster\MonsterMove.cs" />
+    <Compile Include="Assets\Scripts\Monster\MonsterNature.cs" />
+    <Compile Include="Assets\Scripts\Monster\MonsterStats.cs" />
     <Compile Include="Assets\Scripts\Monster\MonsterType.cs" />
     <Compile Include="Assets\Scripts\Monster\MoveStyle.cs" />
     <Compile Include="Assets\Scripts\Title.cs" />

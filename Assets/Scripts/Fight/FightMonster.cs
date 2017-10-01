@@ -29,6 +29,7 @@ public class FightMonster : Monster {
         StatPane = transform.FindChild("StatPane").gameObject;
         var textbox = StatPane.GetComponent<TextMeshProUGUI>();
         textbox.text = System.String.Format(textbox.text, Species, Level, Type1, (Type2 == Assets.Scripts.Monster.MonsterType.None ? "" : " / " + Type2.ToString()), Attack,
-            IVs.Attack, EVs.Attack, Defense, IVs.Defense, EVs.Defense, Speed, IVs.Speed, EVs.Speed);
+            IVs.Attack, EVs.Attack, Defense, IVs.Defense, EVs.Defense, Speed, IVs.Speed, EVs.Speed, CurrentHp, MaxHp, IVs.HP, EVs.HP,
+            SpecialAttack, IVs.SpecialAttack, EVs.SpecialAttack, SpecialDefense, IVs.SpecialDefense, EVs.SpecialDefense, Nature);
     }
 }
