@@ -147,6 +147,15 @@ public class FightController : MonoBehaviour {
     void OnItemButtonTap()
     {
         Debug.Log("You clicked Item!");
+        SqliteDatabase sqlDb = new SqliteDatabase("MonsterCatchingGame.s3db");
+        string query = "SELECT * FROM Moves WHERE id = 1";
+        var results = sqlDb.ExecuteQuery(query);
+        foreach (var value in results[0])
+        {
+            //wip
+            //var move = new MonsterMove();
+            //move.GetType().GetProperty(value.Key).SetValue(move, value.Value, null);
+        }
     }
     void OnRunButtonTap()
     {
