@@ -25,11 +25,11 @@ public class FightController : MonoBehaviour {
         canvas = FindObjectOfType<Canvas>();
         EngagedMonsterObj = Instantiate(Resources.Load("Fight/EngagedMonster", typeof(GameObject)), canvas.transform) as GameObject;
         EngagedMonster = EngagedMonsterObj.GetComponent<FightMonster>();
-        if (GameController.EngagedMonster == null) //for quick testing
-        {
-            EngagedMonster.LoadMonsterBySpecies(MonsterList.Redmon);
-            GameController.EngagedMonster = EngagedMonster;            
-        }
+        //if (GameController.EngagedMonster == null) //for quick testing
+        //{
+        //    EngagedMonster.LoadMonsterBySpecies(MonsterList.Redmon);
+        //    GameController.EngagedMonster = EngagedMonster;            
+        //}
         EngagedMonster.Initialize(GameController.EngagedMonster);
         PlayerMonsterObj = Instantiate(Resources.Load("Fight/PlayerMonster", typeof(GameObject)), canvas.transform) as GameObject;
         PlayerMonster = PlayerMonsterObj.GetComponent<FightMonster>();

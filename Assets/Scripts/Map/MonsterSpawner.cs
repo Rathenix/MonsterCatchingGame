@@ -45,6 +45,7 @@ public class MonsterSpawner : MonoBehaviour {
                     var mapMonster = rustlingGrassObj.GetComponent<MapMonster>();
                     mapMonster.LoadMonsterById(randMon);
                     mapMonster.Level = Random.Range(2, 6);
+                    mapMonster.CurrentHp = mapMonster.MaxHp;
                     mapMonster.spawner = this;
                     mapMonster.uiController = UiController;
                     activeSpawns += 1;
